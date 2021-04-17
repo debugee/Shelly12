@@ -7,4 +7,4 @@
 ## 작동되는 것들
 ### 루트 권한 획득
 ### 루트 파일시스템 리마운트/복원
-### KASLR - kernel base, kernel slide 획득
+### KASLR 무력화 - kernel base, kernel slide 획득

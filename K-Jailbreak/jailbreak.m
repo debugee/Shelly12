@@ -9,6 +9,8 @@
 #include "exploit.h"
 #include "krw.h"
 #include "remount.h"
+#include "amfi.h"
+#include <sys/stat.h>
 
 @implementation jailbreak
 +(void)jb {
@@ -52,18 +54,38 @@
     }
     NSLog(@"uid: %d\n", getuid());
     
-    //  Stage 4 - Remount/Restore rootfs
+    //  Stage 4 - Remount RootFS
     if(![remount remount:getProc(1)])
     {
         NSLog(@"Failed to remount rootfs!\n");
         return;
     }
-    
+    //  Stage 4.1 - Restore RootFS
 //    if(![remount restore_rootfs])
 //    {
 //        NSLog(@"Failed to restore rootfs!\n");
 //        return;
 //    }
+    
+    //  Stage 5 - Make executable
+    remove("/chimera");
+    mkdir("/chimera", 0755);
+    chown("/chimera", 0, 0);
+    
+    mkdir("/chimera/cstmp/", 0700);
+    chown("/chimera/cstmp/", 0, 0);
+    
+    unlink("/chimera/pspawn_payload.dylib");
+    unlink("/usr/lib/pspawn_payload-stg2.dylib");
+    
+    [amfi platformize:getpid()];
+    
+    if(![amfi grabEntitlements:selfProc])
+        return;
+    
+    int amfidPid = kread32(getProcByName("amfid") + PROC_P_PID_OFF);
+    [amfi takeoverAmfid:amfidPid];
+    
     
 }
 @end

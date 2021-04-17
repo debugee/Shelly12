@@ -94,6 +94,22 @@ uint64_t getProc(pid_t pid) {
     return 0;
 }
 
+uint64_t getProcByName(char* nm) {
+    uint64_t proc = kread64(KERNPROC + kslide);
+    
+    while (true) {
+        uint64_t nameptr = proc + PROC_P_NAME_OFF;
+        char name[32];
+        kread_buf(nameptr, &name, 32);
+        if(strcmp(name, nm) == 0) {
+            return proc;
+        }
+        proc = kread64(proc + PROC_P_LIST_LE_PREV_OFF);
+    }
+    
+    return 0;
+}
+
 kern_return_t kread_buf(uint64_t addr, void *buf, size_t sz) {
     mach_vm_address_t p = (mach_vm_address_t)buf;
     mach_vm_size_t read_sz, out_sz = 0;
