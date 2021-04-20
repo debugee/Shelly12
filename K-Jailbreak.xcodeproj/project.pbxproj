@@ -16,7 +16,13 @@
 		D504E6F62629E06400EA8441 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D504E6F52629E06400EA8441 /* IOKit.framework */; };
 		D504E6FB2629E33900EA8441 /* krw.m in Sources */ = {isa = PBXBuildFile; fileRef = D504E6FA2629E33900EA8441 /* krw.m */; };
 		D504E6FF262A923600EA8441 /* remount.m in Sources */ = {isa = PBXBuildFile; fileRef = D504E6FE262A923600EA8441 /* remount.m */; };
-		D504E703262AF1A600EA8441 /* amfi.m in Sources */ = {isa = PBXBuildFile; fileRef = D504E702262AF1A600EA8441 /* amfi.m */; };
+		D51D6716262BFD330000B4B2 /* bootstrap.m in Sources */ = {isa = PBXBuildFile; fileRef = D51D6715262BFD330000B4B2 /* bootstrap.m */; };
+		D51D6720262C008D0000B4B2 /* tar in Resources */ = {isa = PBXBuildFile; fileRef = D51D671F262C008D0000B4B2 /* tar */; };
+		D51D6748262C91550000B4B2 /* basebinaries.tar in Resources */ = {isa = PBXBuildFile; fileRef = D51D6746262C91550000B4B2 /* basebinaries.tar */; };
+		D51D6749262C91550000B4B2 /* bootstrap.tar in Resources */ = {isa = PBXBuildFile; fileRef = D51D6747262C91550000B4B2 /* bootstrap.tar */; };
+		D55C0381262E9F01005FC9E7 /* amfi.m in Sources */ = {isa = PBXBuildFile; fileRef = D55C0380262E9F01005FC9E7 /* amfi.m */; };
+		D5BA7DBE262CAFAC000D6E61 /* launchctl in Resources */ = {isa = PBXBuildFile; fileRef = D5BA7DBC262CAFAC000D6E61 /* launchctl */; };
+		D5BA7DCA262CCA2C000D6E61 /* helloworld in Resources */ = {isa = PBXBuildFile; fileRef = D5BA7DC9262CCA2C000D6E61 /* helloworld */; };
 		D5CBFE3A2629D8200047FA28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5CBFE392629D8200047FA28 /* AppDelegate.m */; };
 		D5CBFE402629D8200047FA28 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5CBFE3F2629D8200047FA28 /* ViewController.m */; };
 		D5CBFE432629D8200047FA28 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5CBFE412629D8200047FA28 /* Main.storyboard */; };
@@ -43,8 +49,19 @@
 		D504E6FA2629E33900EA8441 /* krw.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = krw.m; sourceTree = "<group>"; };
 		D504E6FD262A923600EA8441 /* remount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = remount.h; sourceTree = "<group>"; };
 		D504E6FE262A923600EA8441 /* remount.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = remount.m; sourceTree = "<group>"; };
-		D504E701262AF1A600EA8441 /* amfi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = amfi.h; sourceTree = "<group>"; };
-		D504E702262AF1A600EA8441 /* amfi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = amfi.m; sourceTree = "<group>"; };
+		D51D6710262BFD1B0000B4B2 /* K-Jailbreak */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "K-Jailbreak"; sourceTree = "<group>"; };
+		D51D6714262BFD330000B4B2 /* bootstrap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bootstrap.h; sourceTree = "<group>"; };
+		D51D6715262BFD330000B4B2 /* bootstrap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = bootstrap.m; sourceTree = "<group>"; };
+		D51D671F262C008D0000B4B2 /* tar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = tar; sourceTree = "<group>"; };
+		D51D6746262C91550000B4B2 /* basebinaries.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = basebinaries.tar; sourceTree = "<group>"; };
+		D51D6747262C91550000B4B2 /* bootstrap.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = bootstrap.tar; sourceTree = "<group>"; };
+		D531ACDD262EEED100E14B2C /* xpc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xpc.h; sourceTree = "<group>"; };
+		D531ACE2262F023200E14B2C /* codesign.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = codesign.h; sourceTree = "<group>"; };
+		D55C037F262E9F01005FC9E7 /* amfi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = amfi.h; sourceTree = "<group>"; };
+		D55C0380262E9F01005FC9E7 /* amfi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = amfi.m; sourceTree = "<group>"; };
+		D55C0383262EAB1B005FC9E7 /* cs_blob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cs_blob.h; sourceTree = "<group>"; };
+		D5BA7DBC262CAFAC000D6E61 /* launchctl */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = launchctl; sourceTree = "<group>"; };
+		D5BA7DC9262CCA2C000D6E61 /* helloworld */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = helloworld; sourceTree = "<group>"; };
 		D5CBFE352629D8200047FA28 /* K-Jailbreak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "K-Jailbreak.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5CBFE382629D8200047FA28 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D5CBFE392629D8200047FA28 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -97,6 +114,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D51D671E262C006C0000B4B2 /* bootstrap */ = {
+			isa = PBXGroup;
+			children = (
+				D51D6746262C91550000B4B2 /* basebinaries.tar */,
+				D5BA7DBC262CAFAC000D6E61 /* launchctl */,
+				D5BA7DC9262CCA2C000D6E61 /* helloworld */,
+				D51D6747262C91550000B4B2 /* bootstrap.tar */,
+				D51D671F262C008D0000B4B2 /* tar */,
+			);
+			path = bootstrap;
+			sourceTree = "<group>";
+		};
 		D5CBFE2C2629D8200047FA28 = {
 			isa = PBXGroup;
 			children = (
@@ -122,8 +151,15 @@
 				D5CBFE5F2629DBE10047FA28 /* jailbreak.h */,
 				D504E6F92629E33900EA8441 /* krw.h */,
 				D504E6FA2629E33900EA8441 /* krw.m */,
-				D504E701262AF1A600EA8441 /* amfi.h */,
-				D504E702262AF1A600EA8441 /* amfi.m */,
+				D51D671E262C006C0000B4B2 /* bootstrap */,
+				D51D6714262BFD330000B4B2 /* bootstrap.h */,
+				D51D6715262BFD330000B4B2 /* bootstrap.m */,
+				D531ACDD262EEED100E14B2C /* xpc.h */,
+				D55C037F262E9F01005FC9E7 /* amfi.h */,
+				D55C0380262E9F01005FC9E7 /* amfi.m */,
+				D55C0383262EAB1B005FC9E7 /* cs_blob.h */,
+				D531ACE2262F023200E14B2C /* codesign.h */,
+				D51D6710262BFD1B0000B4B2 /* K-Jailbreak */,
 				D5CBFE602629DBE10047FA28 /* jailbreak.m */,
 				D504E6FD262A923600EA8441 /* remount.h */,
 				D504E6FE262A923600EA8441 /* remount.m */,
@@ -195,10 +231,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D51D6749262C91550000B4B2 /* bootstrap.tar in Resources */,
+				D5BA7DCA262CCA2C000D6E61 /* helloworld in Resources */,
 				D5CBFE482629D8230047FA28 /* LaunchScreen.storyboard in Resources */,
 				D5CBFE452629D8230047FA28 /* Assets.xcassets in Resources */,
 				D5CBFE432629D8200047FA28 /* Main.storyboard in Resources */,
+				D51D6748262C91550000B4B2 /* basebinaries.tar in Resources */,
+				D51D6720262C008D0000B4B2 /* tar in Resources */,
 				D504E6F22629DFDD00EA8441 /* include in Resources */,
+				D5BA7DBE262CAFAC000D6E61 /* launchctl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,13 +250,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D55C0381262E9F01005FC9E7 /* amfi.m in Sources */,
 				D504E6F12629DFDD00EA8441 /* offsets.m in Sources */,
 				D5CBFE402629D8200047FA28 /* ViewController.m in Sources */,
 				D5CBFE3A2629D8200047FA28 /* AppDelegate.m in Sources */,
 				D5CBFE4B2629D8230047FA28 /* main.m in Sources */,
 				D5CBFE612629DBE10047FA28 /* jailbreak.m in Sources */,
+				D51D6716262BFD330000B4B2 /* bootstrap.m in Sources */,
 				D504E6F02629DFDD00EA8441 /* iosurface.c in Sources */,
-				D504E703262AF1A600EA8441 /* amfi.m in Sources */,
 				D504E6EF2629DFDD00EA8441 /* exploit_utilities.c in Sources */,
 				D504E6EC2629DFDD00EA8441 /* exploit.c in Sources */,
 				D504E6FF262A923600EA8441 /* remount.m in Sources */,
@@ -371,6 +413,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/K-Jailbreak/bootstrap",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.xsf1re.k-jailbreak.K-Jailbreak";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -389,6 +435,10 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/K-Jailbreak/bootstrap",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.xsf1re.k-jailbreak.K-Jailbreak";
 				PRODUCT_NAME = "$(TARGET_NAME)";

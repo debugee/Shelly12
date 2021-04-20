@@ -11,6 +11,9 @@
 #include "remount.h"
 #include "amfi.h"
 #include <sys/stat.h>
+#include "bootstrap.h"
+#include <spawn.h>
+
 
 @implementation jailbreak
 +(void)jb {
@@ -30,10 +33,11 @@
         NSLog(@"Failed to get kbase\n");
         return;
     }
+    uint64_t kslide = kbase - KERNEL_IMAGE_BASE;
     NSLog(@"kernel base: 0x%llx\n", kbase);
-    NSLog(@"kernel slide: 0x%llx\n", kbase - KERNEL_IMAGE_BASE);
+    NSLog(@"kernel slide: 0x%llx\n", kslide);
     
-    //  Stage 3 - Get root
+    //  Stage 3 - Get root and grab kernel credentials.
     uint64_t kernProc = getProc(0);
     uint64_t selfProc = getProc(getpid());
     
@@ -54,38 +58,65 @@
     }
     NSLog(@"uid: %d\n", getuid());
     
-    //  Stage 4 - Remount RootFS
+    //  Stage 4 - Escape Sandbox
+    if(!escapeSandboxForProcess(getpid()))
+    {
+        NSLog(@"Failed to escape sandbox\n");
+        return;
+    }
+    
+    //  Stage 5 - Set tfp0 to hsp4
+    if(!SetHSP4(tfp0))
+    {
+        NSLog(@"Failed to set tfp0 to hsp4\n");
+        return;
+    }
+    
+    //  Stage 6.1 - Remount RootFS
     if(![remount remount:getProc(1)])
     {
         NSLog(@"Failed to remount rootfs!\n");
         return;
     }
-    //  Stage 4.1 - Restore RootFS
+    //  Stage 6.2 - Restore RootFS
 //    if(![remount restore_rootfs])
 //    {
 //        NSLog(@"Failed to restore rootfs!\n");
 //        return;
 //    }
     
-    //  Stage 5 - Make executable
-    remove("/chimera");
-    mkdir("/chimera", 0755);
-    chown("/chimera", 0, 0);
-    
-    mkdir("/chimera/cstmp/", 0700);
-    chown("/chimera/cstmp/", 0, 0);
-    
-    unlink("/chimera/pspawn_payload.dylib");
-    unlink("/usr/lib/pspawn_payload-stg2.dylib");
-    
+    //  Stage 7 - Make executable
     [amfi platformize:getpid()];
+    [amfi grabEntitlements:getProc(getpid())];
+    [amfi takeoverAmfid:getPidByName("amfid")];
     
-    if(![amfi grabEntitlements:selfProc])
+    //  Stage 8 - Extract bootstraps
+    [bootstrap bootstrapDevice];
+    
+    //  Stage 9 - run amfidebilitate
+    if(![amfi spawnAmfiDebilitate:(ALLPROC + kslide)])
+    {
+        NSLog(@"Failed to spawn AmfiDebilitate");
         return;
+    }
     
-    int amfidPid = kread32(getProcByName("amfid") + PROC_P_PID_OFF);
-    [amfi takeoverAmfid:amfidPid];
+    //  check if successfully run helloworld.
+    int rv;
+    pid_t pd;
     
-    
+    unlink("/.amfid_success");
+    chmod("/odyssey/helloworld", 0755);
+    const char *args_helloworld[] = {"helloworld", NULL};
+    rv = posix_spawn(&pd, "/odyssey/helloworld", NULL, NULL, (char **)&args_helloworld, NULL);
+    NSLog(@"posix ret: %d", rv);
+    sleep(1);
+    if(access("/.amfid_success", F_OK) != 0) {
+        NSLog(@"amfid injection fail!");
+        return;
+    }
+    NSLog(@"amfid injection success!");
+    unlink("/.amfid_success");
+
+    NSLog(@"K-Jailbreak End!");
 }
 @end

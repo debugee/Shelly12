@@ -16,8 +16,10 @@
 
 //air1 12.4 offsets
 #define KERNPROC 0xFFFFFFF0088E0A20
+#define ALLPROC 0xFFFFFFF0088E16E8
 #define CS_BLOB_GEN_COUNT 0xFFFFFFF0087C2AB0
-#define AMFID_MISValidateSignatureAndCopyInfo 0x2D70
+#define TRUSTCACHE 0xFFFFFFF008937E80
+#define AMFID_RET 0x2F70
 
 #define KERNEL_IMAGE_BASE 0xFFFFFFF007004000
 #define PROC_TASK (0x10)
@@ -46,6 +48,7 @@
 #define APFS_DATA_FLAG (0x31)
 #define KSTRUCT_OFFSET_GET_TRAP_FOR_INDEX (0xB7)
 #define AMFI_SLOT_OFF (0x8)
+#define SANDBOX_SLOT_OFF (0x10)
 
 #define TF_PLATFORM (0x00000400)
 #define CS_PLATFORM_BINARY (0x04000000)
@@ -55,11 +58,21 @@
 #define CS_HARD (0x00000100)
 #define CS_KILL (0x00000200)
 
+#define io_makebits(active, otype, kotype)    \
+(((active) ? IO_BITS_ACTIVE : 0) | ((otype) << 16) |  (kotype))
+
+#define    IKOT_HOST_PRIV                4
+
 kern_return_t
 mach_vm_read_overwrite(vm_map_t, mach_vm_address_t, mach_vm_size_t, mach_vm_address_t, mach_vm_size_t *);
 
 kern_return_t
+mach_vm_read(vm_map_t target_task, mach_vm_address_t address, mach_vm_size_t size, vm_offset_t *data, mach_msg_type_number_t *dataCnt);
+
+kern_return_t
 mach_vm_write(vm_map_t, mach_vm_address_t, vm_offset_t, mach_msg_type_number_t);
+
+kern_return_t mach_vm_deallocate(vm_map_t target, mach_vm_address_t address, mach_vm_size_t size);
 
 kern_return_t
 mach_vm_machine_attribute(vm_map_t, mach_vm_address_t, mach_vm_size_t, vm_machine_attribute_t, vm_machine_attribute_val_t *);
@@ -74,10 +87,16 @@ task_t getTFP0(void);
 uint64_t getKBase(void);
 uint64_t getProc(pid_t pid);
 uint64_t getProcByName(char* nm);
+int getPidByName(char* nm);
 kern_return_t kread_buf(uint64_t addr, void *buf, size_t sz);
 void *kread_buf_alloc(uint64_t addr, mach_vm_size_t read_sz);
 uint32_t kread32(uint64_t where);
 uint64_t kread64(uint64_t where);
+kern_return_t kwrite_buf(uint64_t addr, const void *buf, mach_msg_type_number_t sz);
 void kwrite32(uint64_t where, uint32_t what);
 void kwrite64(uint64_t where, uint64_t what);
 unsigned long kstrlen(uint64_t string);
+uint64_t getTrustcache(void);
+uint64_t kalloc_(vm_size_t size);
+bool escapeSandboxForProcess(pid_t pid);
+bool SetHSP4(mach_port_t tfp0);
