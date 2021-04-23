@@ -9,6 +9,8 @@
 
 @interface ViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UITextView *LogView;
 
++ (instancetype)sharedInstance;
 @end
 

@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)platformize:(pid_t)pid;
 +(uint8_t *)map_file_to_mem:(const char *)path;
 +(BOOL)spawnAmfiDebilitate:(uint64_t)allProc;
++(BOOL)isAmfiDebilitateSpawned;
 @end
 
 NS_ASSUME_NONNULL_END

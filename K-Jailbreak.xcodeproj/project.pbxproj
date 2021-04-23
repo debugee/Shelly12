@@ -23,6 +23,7 @@
 		D55C0381262E9F01005FC9E7 /* amfi.m in Sources */ = {isa = PBXBuildFile; fileRef = D55C0380262E9F01005FC9E7 /* amfi.m */; };
 		D5BA7DBE262CAFAC000D6E61 /* launchctl in Resources */ = {isa = PBXBuildFile; fileRef = D5BA7DBC262CAFAC000D6E61 /* launchctl */; };
 		D5BA7DCA262CCA2C000D6E61 /* helloworld in Resources */ = {isa = PBXBuildFile; fileRef = D5BA7DC9262CCA2C000D6E61 /* helloworld */; };
+		D5C78802262F3E58002CBE85 /* shelly10.tar in Resources */ = {isa = PBXBuildFile; fileRef = D5C78801262F3E58002CBE85 /* shelly10.tar */; };
 		D5CBFE3A2629D8200047FA28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5CBFE392629D8200047FA28 /* AppDelegate.m */; };
 		D5CBFE402629D8200047FA28 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5CBFE3F2629D8200047FA28 /* ViewController.m */; };
 		D5CBFE432629D8200047FA28 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5CBFE412629D8200047FA28 /* Main.storyboard */; };
@@ -62,6 +63,7 @@
 		D55C0383262EAB1B005FC9E7 /* cs_blob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cs_blob.h; sourceTree = "<group>"; };
 		D5BA7DBC262CAFAC000D6E61 /* launchctl */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = launchctl; sourceTree = "<group>"; };
 		D5BA7DC9262CCA2C000D6E61 /* helloworld */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = helloworld; sourceTree = "<group>"; };
+		D5C78801262F3E58002CBE85 /* shelly10.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = shelly10.tar; sourceTree = "<group>"; };
 		D5CBFE352629D8200047FA28 /* K-Jailbreak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "K-Jailbreak.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5CBFE382629D8200047FA28 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D5CBFE392629D8200047FA28 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				D51D6746262C91550000B4B2 /* basebinaries.tar */,
 				D5BA7DBC262CAFAC000D6E61 /* launchctl */,
 				D5BA7DC9262CCA2C000D6E61 /* helloworld */,
+				D5C78801262F3E58002CBE85 /* shelly10.tar */,
 				D51D6747262C91550000B4B2 /* bootstrap.tar */,
 				D51D671F262C008D0000B4B2 /* tar */,
 			);
@@ -232,6 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D51D6749262C91550000B4B2 /* bootstrap.tar in Resources */,
+				D5C78802262F3E58002CBE85 /* shelly10.tar in Resources */,
 				D5BA7DCA262CCA2C000D6E61 /* helloworld in Resources */,
 				D5CBFE482629D8230047FA28 /* LaunchScreen.storyboard in Resources */,
 				D5CBFE452629D8230047FA28 /* Assets.xcassets in Resources */,

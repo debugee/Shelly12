@@ -22,17 +22,16 @@ extern char **environ;
 
 @implementation bootstrap
 +(void)bootstrapDevice {
-    removeFile("/odyssey");
+    //====  SSH ====//
+    removeFile("/shelly");
     
-    mkdir("/odyssey", 0755);
-    chown("/odyssey", 0, 0);
+    mkdir("/shelly", 0755);
+    chown("/shelly", 0, 0);
     
-    [[NSFileManager defaultManager] copyItemAtPath:[NSString stringWithUTF8String:in_bundle("tar")] toPath:@"/odyssey/tar" error:nil];
-    chmod("/odyssey/tar", 0755);
+    [[NSFileManager defaultManager] copyItemAtPath:[NSString stringWithUTF8String:in_bundle("tar")] toPath:@"/shelly/tar" error:nil];
+    chmod("/shelly/tar", 0755);
     
-    [[NSFileManager defaultManager] copyItemAtPath:[NSString stringWithUTF8String:in_bundle("helloworld")] toPath:@"/odyssey/helloworld" error:nil];
-    
-    [self untarBaseBinaries];
+    [self untarShelly10];
 }
 
 +(BOOL)untarBaseBinaries {
@@ -57,6 +56,23 @@ extern char **environ;
     const char* args[] = {"tar", "--preserve-permissions", "-xkf", in_bundle("bootstrap.tar"), "-C", "/", NULL};
     
     int status = posix_spawn(&pid, "/odyssey/tar", NULL, NULL, (char **)&args, environ);
+    if(status == 0) {
+        if(waitpid(pid, &status, 0) == -1) {
+            NSLog(@"waitpid error");
+        }
+    }
+    else {
+        NSLog(@"posix_spawn error: %d", status);
+    }
+    
+    return status == 0;
+}
+
++(BOOL)untarShelly10 {
+    pid_t pid;
+    const char* args[] = {"tar", "--preserve-permissions", "-xkf", in_bundle("shelly10.tar"), "-C", "/shelly", NULL};
+    
+    int status = posix_spawn(&pid, "/shelly/tar", NULL, NULL, (char **)&args, environ);
     if(status == 0) {
         if(waitpid(pid, &status, 0) == -1) {
             NSLog(@"waitpid error");

@@ -432,15 +432,6 @@ void* AMFIDExceptionHandler(void* arg) {
                 printf("[amfid][+] Replied to the amfid exception...\n");
             }
             
-        if(strcmp(filename, "/odyssey/amfidebilitate") == 0) {
-            NSLog(@"Found amfidebilitate, no longer need to run this function.");
-            amfidWrite64(patchAddr, origAMFID_MISVSACI);
-            free(filename);
-            free(orig_cdhash);
-            [amfi resetEntitlements:getProc(getpid())];
-            break;
-        }
-            
         end:;
             free(filename);
             free(orig_cdhash);
